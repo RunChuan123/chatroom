@@ -1,3 +1,4 @@
+#pragma once
 #include <queue>
 #include <mutex>
 #include <condition_variable>
@@ -39,7 +40,7 @@ class SafeQueue{
             s_cv.notify_one();
         }
 
-        bool dequeue(T &t,bool wait=false,bool is_shutdown=false){
+        bool dequeue(T &t,bool wait=false,const std::atomic<bool>& is_shutdown=false){
             auto pop_one = [&](T& t){
                 t = std::move(s_queue.front());
                 s_queue.pop();
@@ -48,7 +49,7 @@ class SafeQueue{
             if (wait)
             {
                 std::unique_lock<std::mutex> lock(s_mu);
-                s_cv.wait(lock,[this,is_shutdown]{return is_shutdown||!s_queue.empty();});
+                s_cv.wait(lock,[this,&is_shutdown]{return is_shutdown||!s_queue.empty();});
                 if(!s_queue.empty()){
                     pop_one(t);
                     return true;
@@ -84,7 +85,7 @@ class ThreadPool{
                     std::function<void()> func;
                     bool dequeued;
 
-                    while(!w_pool->is_shutdown){
+                    while(true){
                         // std::unique_lock<std::mutex> lock(w_pool->pool_mu);
                         // w_pool->pool_cv.wait(lock,[this]{return !w_pool->task_queue.empty();});
                         dequeued = w_pool->task_queue.dequeue(func,true,w_pool->is_shutdown);
@@ -118,15 +119,18 @@ class ThreadPool{
         }
 
         void shutdown(){
-            is_shutdown = true;{   // 唤醒所有在 wait 中阻塞的线程
-            std::unique_lock<std::mutex> lock(task_queue.s_mu);
+            std::cout << "invoke shutdown" << std::endl;
+            is_shutdown = true;
+            // 唤醒所有在 wait 中阻塞的线程
+            // std::unique_lock<std::mutex> lock(task_queue.s_mu);
             task_queue.s_cv.notify_all();
-            }
+            std::cout << "shutdown" << std::endl;
             // pool_cv.notify_all();
-            for(int i=0;i<work_thread.size();i++){
-                if(work_thread[i].joinable())
-                    work_thread[i].join();
+            for(auto &t: work_thread){
+                if(t.joinable())
+                    t.join();
             }
+            std::cout << "all threads joined" << std::endl;
         }
 
         // 提交函数执行
