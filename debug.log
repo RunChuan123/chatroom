@@ -1,0 +1,32 @@
+[2025-10-01 20:59:08][INFO][TID=123366040689536][db_op.hpp:28(MySqlDB)] mysql connect success 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:23(SafeQueue)] SafeQueue created 
+[2025-10-01 20:59:08][INFO][TID=123366040689536][thread.hpp:129(ThreadPool)] ThreadPool created with  4  workers 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:92(ThreadWorker)] ThreadWorker  0  created 
+[2025-10-01 20:59:08][INFO][TID=123366040689536][thread.hpp:140(init)] Thread  0  started 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:92(ThreadWorker)] ThreadWorker  1  created 
+[2025-10-01 20:59:08][INFO][TID=123366040689536][thread.hpp:140(init)] Thread  1  started 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:92(ThreadWorker)] ThreadWorker  2  created 
+[2025-10-01 20:59:08][DEBUG][TID=123366017074880][thread.hpp:96(operator())] Worker  0  started 
+[2025-10-01 20:59:08][DEBUG][TID=123366006589120][thread.hpp:96(operator())] Worker  1  started 
+[2025-10-01 20:59:08][INFO][TID=123366040689536][thread.hpp:140(init)] Thread  2  started 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:92(ThreadWorker)] ThreadWorker  3  created 
+[2025-10-01 20:59:08][DEBUG][TID=123365996103360][thread.hpp:96(operator())] Worker  2  started 
+[2025-10-01 20:59:08][INFO][TID=123366040689536][thread.hpp:140(init)] Thread  3  started 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:49(enqueue)] Task enqueued, queue size= 1 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:174(submit)] Task submitted [object@0x7ffe76255500] 
+[2025-10-01 20:59:08][DEBUG][TID=123365985617600][thread.hpp:96(operator())] Worker  3  started 
+[2025-10-01 20:59:08][DEBUG][TID=123366017074880][thread.hpp:65(dequeue)] Task dequeued (wait=true), queue size= 0 
+[2025-10-01 20:59:08][DEBUG][TID=123366017074880][thread.hpp:108(operator())] Worker  0  executing task 
+[2025-10-01 20:59:08][DEBUG][TID=123366017074880][db_op.hpp:38(exec)] mysql query: %s INSERT INTO test(id, name) VALUES(11, 'test') 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:49(enqueue)] Task enqueued, queue size= 1 
+[2025-10-01 20:59:08][DEBUG][TID=123366040689536][thread.hpp:174(submit)] Task submitted [object@0x7ffe76255500] 
+[2025-10-01 20:59:08][DEBUG][TID=123365985617600][thread.hpp:65(dequeue)] Task dequeued (wait=true), queue size= 0 
+[2025-10-01 20:59:08][DEBUG][TID=123365985617600][thread.hpp:108(operator())] Worker  3  executing task 
+[2025-10-01 20:59:08][WARNING][TID=123366040689536][thread.hpp:145(shutdown)] ThreadPool shutting down 
+[2025-10-01 20:59:08][DEBUG][TID=123365985617600][db_op.hpp:50(query)] mysql query: %s SELECT id, name FROM test 
+[2025-10-01 20:59:08][DEBUG][TID=123366017074880][thread.hpp:111(operator())] Worker  0  finished task 
+[2025-10-01 20:59:08][DEBUG][TID=123366017074880][thread.hpp:119(operator())] Worker  0  stopped 
+[2025-10-01 20:59:08][INFO][TID=123366040689536][thread.hpp:154(shutdown)] Thread  0  joined 
+[2025-10-01 20:59:08][DEBUG][TID=123365985617600][db_op.hpp:70(query)] mysql query success 
+[2025-10-01 20:59:08][DEBUG][TID=123365985617600][thread.hpp:111(operator())] Worker  3  finished task 
+[2025-10-01 20:59:08][DEBUG][TID=123365985617600][thread.hpp:119(operator())] Worker  3  stopped 

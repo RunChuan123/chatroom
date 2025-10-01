@@ -1,7 +1,7 @@
 # 自动检测编译器：优先 g++，否则用 clang++
 CXX := $(shell which g++ || which clang++)
 CXXFLAGS := -std=c++17 -Wall -Wextra -pedantic -g -O0
-CPPFLAGS := -DDEBUG
+CPPFLAGS :=  #-DDEBUG
 
 # 根据平台选择 MySQL 的 include 和 lib
 UNAME_S := $(shell uname -s)
@@ -13,7 +13,7 @@ else ifeq ($(UNAME_S),Linux)   # Linux
     MYSQL_LIB := -L/usr/lib/x86_64-linux-gnu -lmysqlclient
 endif
 
-SRCS := main.cpp db_op.cpp thread.cpp test.cpp
+SRCS := main.cpp test.cpp 
 OBJS := $(SRCS:.cpp=.o)
 TARGET := main
 

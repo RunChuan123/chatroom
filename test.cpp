@@ -42,7 +42,7 @@ int multiply_return(const int a, const int b)
     return res;
 }
 
-void example()
+void thread_pool_test()
 {
     // 创建3个线程的线程池
     ThreadPool pool(3);
@@ -77,9 +77,3 @@ void example()
     std::cout << "All done" << std::endl;
 }
 
-int main()
-{
-    example();
-
-    return 0;
-}
