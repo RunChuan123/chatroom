@@ -1,27 +1,34 @@
-CXX := g++
-CXXFLAGS := -std=c++17 -Wall -Wextra  -pedantic -g -O0
+# 自动检测编译器：优先 g++，否则用 clang++
+CXX := $(shell which g++ || which clang++)
+CXXFLAGS := -std=c++17 -Wall -Wextra -pedantic -g -O0
 CPPFLAGS := -DDEBUG
 
-.PHONY: all main
+# 根据平台选择 MySQL 的 include 和 lib
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)   # macOS
+    MYSQL_INC := -I/opt/homebrew/opt/mysql-client/include
+    MYSQL_LIB := -L/opt/homebrew/opt/mysql-client/lib -lmysqlclient
+else ifeq ($(UNAME_S),Linux)   # Linux
+    MYSQL_INC := -I/usr/include/mysql
+    MYSQL_LIB := -L/usr/lib/x86_64-linux-gnu -lmysqlclient
+endif
 
-all: 
-	./main
+SRCS := main.cpp db_op.cpp thread.cpp test.cpp
+OBJS := $(SRCS:.cpp=.o)
+TARGET := main
 
-main: main.cpp
-	$(CXX) $^ -o $@
-# TARGET := main
-# SRC := main.cpp window_op.cpp text_editor.cpp process_key.cpp file_op.cpp status.cpp
- 
-# .PHONY: all run clean
-     
-# all: $(TARGET)
+.PHONY: all clean run
 
-# $(TARGET): $(SRC)
-# 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $^ -o $@ 
-# run: $(TARGET)
-# 	./$(TARGET)
-# clean:
-# 	rm -f $(TARGET)
+all: $(TARGET)
 
-# row: row_key_show
-# 	clang++ row_key_show.cpp -o row && ./row
+$(TARGET): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(MYSQL_INC) $(OBJS) -o $@ $(MYSQL_LIB)
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(MYSQL_INC) -c $< -o $@
+
+run: $(TARGET)
+	./$(TARGET)
+
+clean:
+	rm -f $(OBJS) $(TARGET)
