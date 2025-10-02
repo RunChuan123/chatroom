@@ -12,14 +12,13 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-#define BUF_SIZE 1024
-#define EPOLL_SIZE 50
+#define NUM_WORKERS 8
 
 #define SQL_IP "1.94.121.19"
 
 #define SQL_USER "reuser"
 #define SQL_PASSWD "12345678"
 #define SQL_DB "chatroom"
-
+#define EPOLL_MAX_EVENTS 1024
 
 

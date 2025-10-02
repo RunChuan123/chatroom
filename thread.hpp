@@ -10,7 +10,7 @@
 #include <future>
 #include <memory>
 #include "debug_logger.hpp"   // 日志类
-
+#include "define.hpp"
 
 template <typename T>
 class SafeQueue {
@@ -124,7 +124,7 @@ public:
     SafeQueue<std::function<void()>> task_queue;
     std::vector<std::thread> work_thread;
 
-    ThreadPool(const int num_workers)
+    ThreadPool(const int num_workers = NUM_WORKERS)
         : is_shutdown(false), work_thread(std::vector<std::thread>(num_workers)) {
         LOG_INFO("ThreadPool created with ", num_workers, " workers");
     }
